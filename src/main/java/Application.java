@@ -59,7 +59,7 @@ public class Application {
                                     {
                                         System.out.println("정상적으로 입력 됐습니다");
                                     }
-                                    else System.out.println("id값입니다");
+                                    else System.out.println("중복된 값이 있어 입력에 실패 했습니다");
                                 }catch (InputMismatchException e){
                                     System.out.println(ERROR_WRONG_INPUT);
                                     break;
@@ -71,9 +71,9 @@ public class Application {
                                 // id값을 기준으로 service에 넘겨준다
                                 System.out.println(NEWLINE_TEN);
                                 System.out.print(MENU_CUSTOMER_DELETE);
+                                System.out.print("id:"  );
                                 //입력을 잘 했다는 가정으로
                                 //1. 입력된 정보가 삭제 됐습니다 2. 입력된 정보가 없어 삭제가 안됐습니다
-
                                 long id=scanner.nextLong();
                                 scanner.nextLine();
                                 boolean check=customerService.deleteCustomer(id);
@@ -130,13 +130,12 @@ public class Application {
                                                 System.out.println(customer1.toString());
                                             }
                                         }
-                                        else System.out.println("회원이 아예 없습니다");
-
+                                        else System.out.println("등록된 회원이 없습니다");
 
                                         // 검색, 메소드 -> 출력
                                         break;
                                     case 4:
-                                        System.out.println("생일검색");
+                                        System.out.print("birth(MMDD):");
                                         System.out.println(MENU_CUSTOMER_FIND_BIRTHDAY);
                                         String mmdd=scanner.nextLine();
                                         customer=customerService.findByBirth(mmdd);

@@ -2,7 +2,9 @@ package repository.customerRepo;
 
 import data.Customer;
 
+import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.text.DateFormatter;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +13,10 @@ import java.util.function.BiFunction;
 
 public class MemoryCustomerRepository {
     private static MemoryCustomerRepository memoryCustomerRepository;
-     List<Customer> customerList =new ArrayList<>();
+     List<Customer> customerList =new ArrayList<Customer>(List.of(new Customer(1,"최창욱",33,"01041748861","뱅뱅사거리",LocalDate.parse("19920224",DateTimeFormatter.BASIC_ISO_DATE),"vip")
+             ));
+
+    LocalDate birthday = LocalDate.parse("19920224", DateTimeFormatter.BASIC_ISO_DATE); // 다시 찾아봐
     private MemoryCustomerRepository() {}
 
     //저장소 싱글톤으로 생성

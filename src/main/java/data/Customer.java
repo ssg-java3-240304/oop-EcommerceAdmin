@@ -29,7 +29,7 @@ public class Customer {
                 " 나이: '" + age +'\'' +
                 " 전화번호: '" + phoneNumber + '\'' +
                 " 주소: '" + address + '\'' +
-                " 생년월일: '" + birth +
+                " 생년월일: '" + birth +'\'' +
                 " 등급: '" + tier + '\'';
     }
 
