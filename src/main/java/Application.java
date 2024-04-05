@@ -59,7 +59,7 @@ public class Application {
                                     {
                                         System.out.println("정상적으로 입력 됐습니다");
                                     }
-                                    else System.out.println("중복된 값이 있어 입력에 실패 했습니다");
+                                    else System.out.println("id값입니다");
                                 }catch (InputMismatchException e){
                                     System.out.println(ERROR_WRONG_INPUT);
                                     break;
@@ -71,9 +71,9 @@ public class Application {
                                 // id값을 기준으로 service에 넘겨준다
                                 System.out.println(NEWLINE_TEN);
                                 System.out.print(MENU_CUSTOMER_DELETE);
-                                System.out.print("id:"  );
                                 //입력을 잘 했다는 가정으로
                                 //1. 입력된 정보가 삭제 됐습니다 2. 입력된 정보가 없어 삭제가 안됐습니다
+
                                 long id=scanner.nextLong();
                                 scanner.nextLine();
                                 boolean check=customerService.deleteCustomer(id);
@@ -132,10 +132,11 @@ public class Application {
                                         }
                                         else System.out.println("등록된 회원이 없습니다");
 
+
                                         // 검색, 메소드 -> 출력
                                         break;
                                     case 4:
-                                        System.out.print("birth(MMDD):");
+                                        System.out.println("생일검색");
                                         System.out.println(MENU_CUSTOMER_FIND_BIRTHDAY);
                                         String mmdd=scanner.nextLine();
                                         customer=customerService.findByBirth(mmdd);
@@ -242,40 +243,76 @@ public class Application {
                             // 상품 등록
                             //
                             case 1:
-                                System.out.println("Product Add Entered!"); //테스트용 출력 코드
+                                //System.out.println("Product Add Entered!"); //테스트용 출력 코드
                                 System.out.println(NEWLINE_TEN);
                                 System.out.print(MENU_PRODUCT_ADD);
                                 //input
-                                System.out.printf("상품코드");
+                                System.out.printf("상품코드:");
                                 long id= scanner.nextLong();
-                                System.out.printf("상품명");
+                                scanner.nextLine();
+                                System.out.printf("상품명:");
                                 String name=scanner.nextLine();
 
-                                System.out.printf("가격");
+                                System.out.printf("가격:");
                                 int price=scanner.nextInt();
 
-                                System.out.printf("재고");
+                                System.out.printf("재고:");
                                 int stock =scanner.nextInt();
-
-                                System.out.printf("카테고리");
+                                scanner.nextLine();
+                                System.out.printf("카테고리:");
                                 String category=scanner.nextLine();
                                 boolean result = productService.saveProduct(id,name, price, stock, category);
                                 break;
                             // 상품 삭제
                             case 2:
-                                System.out.println("Product Delete Entered!"); //테스트용 출력 코드
+                                //System.out.println("Product Delete Entered!"); //테스트용 출력 코드
                                 System.out.println(NEWLINE_TEN);
                                 System.out.print(MENU_PRODUCT_DELETE);
+                                System.out.print("상품코드: ");
+                                int productID = scanner.nextInt();
+                                boolean deleteResult = productService.deleteProduct(productID);
+                                if(deleteResult) System.out.println("상품이 정상적으로 삭제되었습니다.");
+                                else System.out.println("상품이 존재하지 않습니다.");
                                 break;
                             // 상품 조회
                             //
                             case 3:
-                                System.out.println("Product Find Entered!"); //테스트용 출력 코드
+                                //System.out.println("Product Find Entered!"); //테스트용 출력 코드
                                 System.out.println(NEWLINE_TEN);
                                 System.out.print(MENU_PRODUCT_FIND);
+                                choice = scanner.nextInt();
+                                switch (choice){
+                                    case 1:
+                                        Product foundProduct=null;
+                                        scanner.nextLine();
+                                        System.out.print("상품명 입력: ");
+                                        String productName = scanner.nextLine();
+                                        foundProduct = productService.findByName(productName);
+                                        if(foundProduct!=null){
+                                            System.out.println(foundProduct);
+                                        }
+                                        else{
+                                            System.out.println("상품이 존재하지 않습니다.");
+                                        }
+                                        break;
+                                    case 2:
+                                        System.out.print("상품코드 입력: ");
+                                        int productId = scanner.nextInt();
+                                        foundProduct = productService.findById(productId);
+                                        if(foundProduct!=null){
+                                            System.out.println(foundProduct);
+                                        }
+                                        else{
+                                            System.out.println("상품이 존재하지 않습니다.");
+                                        }
+                                        break;
+                                    case 0: break;
+                                    default:
+                                        System.out.println(ERROR_WRONG_INPUT);
+                                }
                                 break;
                             // 뒤로 가기
-                            case 0: break productMenu;
+                            case 0: break productMenu; // 감사합니다 ㅎㅎ
                         }
                     }
                     break;
@@ -299,27 +336,27 @@ public class Application {
         long id = scanner.nextLong();
         scanner.nextLine();
 
-        System.out.print("name: ");
+        System.out.print("이름: ");
         String name = scanner.nextLine();
 
-        System.out.print("age: ");
+        System.out.print("나이: ");
         int age = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("phone number: ");
+        System.out.print("전화번호: ");
         String phoneNumber = scanner.nextLine();
 
-        System.out.print("address: ");
+        System.out.print("주소: ");
         String address = scanner.nextLine();
 
-        System.out.print("birthday(YYYYMMDD): ");
+        System.out.print("생년월일(YYYYMMDD): ");
         //TODO 생일 입력받아 LocalDate 객체로 만들기
         String birth = scanner.nextLine();// string -> LocalDate 이거 찾아서 작업해야됨
 
         LocalDate birthday = LocalDate.parse(birth, DateTimeFormatter.BASIC_ISO_DATE); // 다시 찾아봐
-        System.out.println("생일값 : "+birthday);
+        //System.out.println("생일값 : "+birthday);
 
-        System.out.print("tier: "); // enum바꿀예정
+        System.out.print("등급: "); // enum바꿀예정
         String tier=scanner.nextLine();
         return new Customer(id, name, age, phoneNumber, address, birthday, tier);
     }
@@ -351,47 +388,47 @@ public class Application {
     //root menu
     static final String MENU_ROOT = """
             ========================<MAIN>
-            1. CUSTOMER
-            2. ORDER
-            3. PRODUCT
-            0. TERMINATE
+            1. 고객 관리
+            2. 주문 관리
+            3. 상품 관리
+            0. 프로그램 종료
             ==============================
             ENTER: """;
 
     //customer menu
     static final String MENU_CUSTOMER= """
             ====================<CUSTOMER>
-            1. ADD CUSTOMER
-            2. DELETE CUSTOMER
-            3. FIND CUSTOMER
-            0. GO BACK
+            1. 고객 등록
+            2. 고객 삭제
+            3. 고객 조회
+            0. 뒤로 가기
             ==============================
             ENTER: """;
     static final String MENU_CUSTOMER_ADD = """
             ==============================
-                    <ADD CUSTOMER>
+                       <고객 등록>
             """;
     static final String MENU_CUSTOMER_DELETE = """
             ==============================
-                   <DELETE CUSTOMER>
+                       <고객 삭제>
             """;
     static final String MENU_CUSTOMER_FIND = """
             ==============================
-                    <FIND CUSTOMER>
-            1. BY NAME
-            2. BY ID
-            3. BY ALL
-            4. TODAY'S BIRTHDAY
-            0. GO BACK
+                       <고객 조회>
+            1. 이름으로 조회
+            2. ID로 조회
+            3. 전체 조회
+            4. 생일자 조회
+            0. 뒤로 가기
             ==============================
             ENTER: """;
     static final String MENU_CUSTOMER_FIND_NAME= """
             ==============================
-                   <FIND CUSTOMER>
-            NAME: """;
+                       <고객 조회>
+            이름: """;
     static final String MENU_CUSTOMER_FIND_ID= """
             ==============================
-                   <FIND CUSTOMER>
+                       <고객 조회>
             ID: """;
 
     //TODO
@@ -400,52 +437,52 @@ public class Application {
     //order menu
     static final String MENU_ORDER = """
             =======================<ORDER>
-            1. ADD ORDER
-            2. DELETE ORDER
-            3. FIND ORDER
-            0. GO BACK
+            1. 주문 등록
+            2. 주문 삭제
+            3. 주문 조회
+            0. 뒤로 가기
             ==============================
             ENTER: """;
     static final String MENU_ORDER_ADD = """
             ==============================
-                     <ADD ORDER>
+                       <주문 등록>
             """;
     static final String MENU_ORDER_DELETE = """
             ==============================
-                    <DELETE ORDER>
+                       <주문 삭제>
             """;
     static final String MENU_ORDER_FIND = """
             ==============================
-                     <FIND ORDER>
-            1. FIND BY ORDER ID
-            2. FIND BY CUSTOMER ID
-            3. FIND BY PRODUCT ID
-            4. FIND ALL
-            0. GO BACK
+                       <주문 조회>
+            1. 주문 ID로 조회
+            2. 고객 ID로 조회
+            3. 상품 ID로 조회
+            4. 전체 조회
+            0. 뒤로 가기
             ==============================
             ENTER: """;
     //product menu
     static final String MENU_PRODUCT= """
             =====================<PRODUCT>
-            1. ADD PRODUCT
-            2. DELETE PRODUCT
-            3. FIND PRODUCT
-            0. GO BACK
+            1. 상품 등록
+            2. 상품 삭제
+            3. 상품 조회
+            0. 뒤로 가기
             ==============================
             ENTER: """;
     static final String MENU_PRODUCT_ADD = """
             ==============================
-                    <ADD PRODUCT>
+                       <상품 등록>
             """;
     static final String MENU_PRODUCT_DELETE = """
             ==============================
-                   <DELETE PRODUCT>
+                       <상품 삭제>
             """;//id 기준으로 삭제
     static final String MENU_PRODUCT_FIND = """
             ==============================
-                     <FIND PRODUCT>
-            1. FIND BY NAME
-            2. FIND BY ID
+                       <상품 조회>
+            1. 이름으로 조회
+            2. ID로 조회
             ==============================
             ENTER: """;// 상품 고유아이디, 상품 명
 
@@ -455,7 +492,7 @@ public class Application {
             .......................GOOD BYE
             """;
     static final String ERROR_WRONG_INPUT= """
-            NOT VALID INPUT!
+            유효하지 않은 입력입니다!
             """;
 
     static final String NEWLINE_TEN = "\n\n\n\n\n\n\n\n\n\n";
